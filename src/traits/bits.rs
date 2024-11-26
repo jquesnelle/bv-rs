@@ -59,8 +59,8 @@ pub trait Bits {
     /// Panics if `position` is out of bounds.
     fn get_block(&self, position: usize) -> Self::Block {
         assert!(position < self.block_len(),
-                format!("Bits::get_block: out of bounds ({}/{})",
-                        position, self.block_len()));
+                "Bits::get_block: out of bounds ({}/{})",
+                        position, self.block_len());
 
         let first_bit = Self::Block::mul_nbits(position);
         let bit_count = Self::Block::block_bits(self.bit_len(), position);

@@ -118,7 +118,6 @@ impl<'a, Block: BlockType> BitSliceable<Range<u64>> for &'a mut BitVec<Block> {
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a, Block: BlockType> BitSliceable<RangeInclusive<u64>> for &'a BitVec<Block> {
     type Slice = BitSlice<'a, Block>;
 
@@ -127,7 +126,6 @@ impl<'a, Block: BlockType> BitSliceable<RangeInclusive<u64>> for &'a BitVec<Bloc
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a, Block: BlockType> BitSliceable<RangeInclusive<u64>> for &'a mut BitVec<Block> {
     type Slice = BitSliceMut<'a, Block>;
 
@@ -168,7 +166,6 @@ impl<'a, Block: BlockType> BitSliceable<RangeTo<u64>> for &'a mut BitVec<Block> 
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a, Block: BlockType> BitSliceable<RangeToInclusive<u64>> for &'a BitVec<Block> {
     type Slice = BitSlice<'a, Block>;
 
@@ -177,7 +174,6 @@ impl<'a, Block: BlockType> BitSliceable<RangeToInclusive<u64>> for &'a BitVec<Bl
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a, Block: BlockType> BitSliceable<RangeToInclusive<u64>> for &'a mut BitVec<Block> {
     type Slice = BitSliceMut<'a, Block>;
 

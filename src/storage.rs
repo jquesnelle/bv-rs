@@ -327,7 +327,6 @@ impl_block_type!(u8);
 impl_block_type!(u16);
 impl_block_type!(u32);
 impl_block_type!(u64);
-#[cfg(int_128)]
 impl_block_type!(u128);
 impl_block_type!(usize);
 

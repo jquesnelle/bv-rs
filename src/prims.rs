@@ -67,7 +67,6 @@ impl_bits_prim!(u8);
 impl_bits_prim!(u16);
 impl_bits_prim!(u32);
 impl_bits_prim!(u64);
-#[cfg(int_128)]
 impl_bits_prim!(u128);
 impl_bits_prim!(usize);
 
@@ -131,7 +130,6 @@ mod test {
         assert_eq!( x, 0b00111100 );
     }
 
-    #[cfg(int_128)]
     #[test]
     fn u128_feature () {
         assert_eq!( 30u128.block_len(), 1 );

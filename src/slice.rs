@@ -109,7 +109,7 @@ impl BlockAddress {
                 // the result.
                 let block2      = ptr::read(ptr1.offset(1));
                 let chunk2      = block2.get_bits(0, bits_size2);
-                (chunk1 | (chunk2 << shift2))
+                chunk1 | (chunk2 << shift2)
             }
         }
     }
@@ -484,7 +484,6 @@ impl<'a, Block: BlockType> BitSliceable<Range<u64>> for BitSliceMut<'a, Block> {
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a, Block: BlockType> BitSliceable<RangeInclusive<u64>> for BitSlice<'a, Block> {
     type Slice = Self;
 
@@ -501,7 +500,6 @@ impl<'a, Block: BlockType> BitSliceable<RangeInclusive<u64>> for BitSlice<'a, Bl
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a, Block: BlockType> BitSliceable<RangeInclusive<u64>> for BitSliceMut<'a, Block> {
     type Slice = Self;
 
@@ -552,7 +550,6 @@ impl<'a, Block: BlockType> BitSliceable<RangeTo<u64>> for BitSliceMut<'a, Block>
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a, Block: BlockType> BitSliceable<RangeToInclusive<u64>> for BitSlice<'a, Block> {
     type Slice = Self;
 
@@ -561,7 +558,6 @@ impl<'a, Block: BlockType> BitSliceable<RangeToInclusive<u64>> for BitSlice<'a, 
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a, Block: BlockType> BitSliceable<RangeToInclusive<u64>> for BitSliceMut<'a, Block> {
     type Slice = Self;
 
@@ -750,7 +746,6 @@ mod test {
         assert_eq!( act, exp );
     }
 
-    #[cfg(inclusive_range)]
     #[test]
     fn range_to_inclusive() {
         use BitSliceable;

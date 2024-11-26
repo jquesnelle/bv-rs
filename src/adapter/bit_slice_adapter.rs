@@ -87,7 +87,7 @@ macro_rules! impl_bit_sliceable_adapter {
 
                 fn bit_slice(self, range: ::std::ops::Range<u64>) -> Self::Slice {
                     assert!( range.start <= range.end,
-                             format!("{}::slice: bad range", stringify!($target)) );
+                             "{}::slice: bad range", stringify!($target) );
                     ::adapter::BitSliceAdapter::new(self, range.start, range.end - range.start)
                 }
             }
@@ -118,7 +118,6 @@ macro_rules! impl_bit_sliceable_adapter {
                 }
             }
 
-            #[cfg(inclusive_range)]
             impl<$($param)*> ::BitSliceable<::std::ops::RangeInclusive<u64>> for $target {
                 type Slice = ::adapter::BitSliceAdapter<Self>;
 
@@ -129,7 +128,6 @@ macro_rules! impl_bit_sliceable_adapter {
                 }
             }
 
-            #[cfg(inclusive_range)]
             impl<$($param)*> ::BitSliceable<::std::ops::RangeToInclusive<u64>> for $target {
                 type Slice = ::adapter::BitSliceAdapter<Self>;
 
@@ -202,7 +200,7 @@ fn get_block_addr<Block: BlockType>(start: u64, len: u64, position: usize)
     let real_len   = if real_start + block_size < start + len {
         block_size
     } else {
-        (start + len - real_start)
+        start + len - real_start
     };
 
     (real_start, real_len as usize)
@@ -249,7 +247,6 @@ impl<T: Bits> BitSliceable<RangeFull> for BitSliceAdapter<T> {
     }
 }
 
-#[cfg(inclusive_range)]
 impl<T: Bits> BitSliceable<RangeInclusive<u64>> for BitSliceAdapter<T> {
     type Slice = Self;
 
@@ -260,7 +257,6 @@ impl<T: Bits> BitSliceable<RangeInclusive<u64>> for BitSliceAdapter<T> {
     }
 }
 
-#[cfg(inclusive_range)]
 impl<T: Bits> BitSliceable<RangeToInclusive<u64>> for BitSliceAdapter<T> {
     type Slice = Self;
 
@@ -306,7 +302,7 @@ impl<'a, T: Bits> BitSliceable<RangeFull> for &'a BitSliceAdapter<T> {
     }
 }
 
-#[cfg(inclusive_range)]
+
 impl<'a, T: Bits> BitSliceable<RangeInclusive<u64>> for &'a BitSliceAdapter<T> {
     type Slice = BitSliceAdapter<&'a T>;
 
@@ -317,7 +313,7 @@ impl<'a, T: Bits> BitSliceable<RangeInclusive<u64>> for &'a BitSliceAdapter<T> {
     }
 }
 
-#[cfg(inclusive_range)]
+
 impl<'a, T: Bits> BitSliceable<RangeToInclusive<u64>> for &'a BitSliceAdapter<T> {
     type Slice = BitSliceAdapter<&'a T>;
 

@@ -87,7 +87,6 @@ impl<'a> BitSliceable<Range<u64>> for &'a mut [bool] {
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a> BitSliceable<RangeInclusive<u64>> for &'a [bool] {
     type Slice = &'a [bool];
 
@@ -101,7 +100,6 @@ impl<'a> BitSliceable<RangeInclusive<u64>> for &'a [bool] {
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a> BitSliceable<RangeInclusive<u64>> for &'a mut [bool] {
     type Slice = &'a mut [bool];
 
@@ -144,7 +142,6 @@ impl<'a> BitSliceable<RangeTo<u64>> for &'a mut [bool] {
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a> BitSliceable<RangeToInclusive<u64>> for &'a [bool] {
     type Slice = &'a [bool];
 
@@ -153,7 +150,6 @@ impl<'a> BitSliceable<RangeToInclusive<u64>> for &'a [bool] {
     }
 }
 
-#[cfg(inclusive_range)]
 impl<'a> BitSliceable<RangeToInclusive<u64>> for &'a mut [bool] {
     type Slice = &'a mut [bool];
 

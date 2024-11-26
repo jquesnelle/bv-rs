@@ -75,6 +75,55 @@ impl<'de, Block: BlockType + serde::Deserialize<'de>> serde::Deserialize<'de> fo
     }
 }
 
+#[cfg(feature = "borsh")]
+impl<Block: BlockType + borsh::BorshSerialize> borsh::BorshSerialize for BitVec<Block> {
+    fn serialize<W: std::io::Write>(&self, writer: &mut W) -> std::io::Result<()> {
+        // Serialize the length
+        self.len.serialize(writer)?;
+        
+        // Serialize the blocks
+        let block_len = self.block_len();
+        for i in 0..block_len {
+            // We know this is safe because i is within block_len
+            unsafe {
+                self.bits.get_block(i).serialize(writer)?;
+            }
+        }
+        
+        Ok(())
+    }
+}
+
+#[cfg(feature = "borsh")]
+impl<Block: BlockType + borsh::BorshDeserialize> borsh::BorshDeserialize for BitVec<Block> {
+    fn deserialize(buf: &mut &[u8]) -> std::io::Result<Self> {
+        Self::deserialize_reader(buf)
+    }
+
+    fn deserialize_reader<R: std::io::Read>(reader: &mut R) -> std::io::Result<Self> {
+        // Deserialize the length
+        let len = u64::deserialize_reader(reader)?;
+        
+        // Calculate number of blocks needed
+        let block_len = Block::ceil_div_nbits(len);
+        
+        // Create a new BitVec with the right capacity
+        let mut bv = BitVec::with_block_capacity(block_len);
+        bv.len = len;
+        
+        // Deserialize each block
+        for i in 0..block_len {
+            let block = Block::deserialize_reader(reader)?;
+            // We know this is safe because we just allocated the right number of blocks
+            unsafe {
+                bv.bits.set_block(i, block);
+            }
+        }
+        
+        Ok(bv)
+    }
+}
+
 impl<Block: BlockType> Default for BitVec<Block> {
     fn default() -> Self {
         Self::new()
